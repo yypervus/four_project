@@ -1,10 +1,13 @@
 from django.contrib import admin
 
+# Register your models here.
+from django.contrib import admin
+
 from .models import Article, Scope, ArticleInScope
 from django.core.exceptions import ValidationError
 from django.forms import BaseInlineFormSet
 
-class ScopeArticleInScopeInLineFormset(BaseInlineFormSet):
+class ArticleInScopeInLineFormset(BaseInlineFormSet):
     def clean(self):
         count = 0
         for form in self.forms:
@@ -21,17 +24,16 @@ class ScopeArticleInScopeInLineFormset(BaseInlineFormSet):
         return super().clean()  # вызываем базовый код переопределяемого метода
 
 
-class ScopeArticleInScopeInLine(admin.TabularInline):
+class ArticleInScopeInLine(admin.TabularInline):
     model = ArticleInScope
-    formset = ScopeArticleInScopeInLineFormset
+    formset = ArticleInScopeInLineFormset
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    inlines = [ScopeArticleInScopeInLine]
+    inlines = [ArticleInScopeInLine]
 
 
 @admin.register(Scope)
 class ScopeAdmin(admin.ModelAdmin):
-    inlines = [ScopeArticleInScopeInLine]
-
+    inlines = [ArticleInScopeInLine]
 

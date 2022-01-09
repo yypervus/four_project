@@ -1,5 +1,8 @@
 from django.db import models
 
+# Create your models here.
+from django.db import models
+
 
 class Article(models.Model):
 
@@ -30,7 +33,7 @@ class Scope(models.Model):
 
 
 class ArticleInScope(models.Model):
-    article = models.ForeignKey(Article, verbose_name="Статья", on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, verbose_name="Статья", on_delete=models.CASCADE, related_name='chapter')
     scope = models.ForeignKey(Scope, verbose_name="Раздел", on_delete=models.CASCADE)
     is_main = models.BooleanField(verbose_name="Основной", default=False)
 
